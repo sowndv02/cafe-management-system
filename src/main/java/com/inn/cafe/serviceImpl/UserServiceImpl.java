@@ -6,8 +6,14 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.inn.cafe.JWT.CustomerUserDetailsService;
+import com.inn.cafe.JWT.JwtFillter;
+import com.inn.cafe.JWT.JwtUtil;
 import com.inn.cafe.POJO.User;
 import com.inn.cafe.constents.CafeConstants;
 import com.inn.cafe.dao.UserDao;
@@ -22,6 +28,15 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	AuthenticationManager authenticationManager;
+	
+	@Autowired
+	CustomerUserDetailsService customerUserDetailsService;
+	
+	@Autowired
+	JwtUtil jwtUtil;
 	
 	@Override
 	public ResponseEntity<String> signUp(Map<String, String> requestMap) {
@@ -65,6 +80,29 @@ public class UserServiceImpl implements UserService{
 		user.setRole("user");
 		return user;
 		
+	}
+
+	@Override
+	public ResponseEntity<String> login(Map<String, String> requestMap) {
+		log.info("Inside login");
+		try {
+			Authentication auth = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(requestMap.get("email"), requestMap.get("password"))
+			);
+			
+			if(auth.isAuthenticated()) {
+				if(customerUserDetailsService.getUserDetail().getStatus().equalsIgnoreCase("true")) {
+					return new ResponseEntity<String>("{\"token\":\""+ jwtUtil.generateToken(customerUserDetailsService.getUserDetail().getEmail(),
+							customerUserDetailsService.getUserDetail().getRole())
+					+"\"}", HttpStatus.OK);
+				}
+			}else {
+				return new ResponseEntity<String>("{\"message\":\""+ "Wait for admin approval." + "\"}",HttpStatus.BAD_REQUEST);
+			}
+		} catch (Exception e) {
+			log.error("{}", e);
+		}
+		return new ResponseEntity<String>("{\"message\":\""+ "Bad Credentials" + "\"}",HttpStatus.BAD_REQUEST);
 	}
 
 }
