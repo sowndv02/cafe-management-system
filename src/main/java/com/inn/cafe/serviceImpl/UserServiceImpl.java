@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.inn.cafe.JWT.CustomerUserDetailsService;
-import com.inn.cafe.JWT.JwtFillter;
 import com.inn.cafe.JWT.JwtUtil;
 import com.inn.cafe.POJO.User;
 import com.inn.cafe.constents.CafeConstants;
@@ -92,12 +91,13 @@ public class UserServiceImpl implements UserService{
 			
 			if(auth.isAuthenticated()) {
 				if(customerUserDetailsService.getUserDetail().getStatus().equalsIgnoreCase("true")) {
-					return new ResponseEntity<String>("{\"token\":\""+ jwtUtil.generateToken(customerUserDetailsService.getUserDetail().getEmail(),
+					return new ResponseEntity<String>("{\"token\":\""+ 
+				jwtUtil.generateToken(customerUserDetailsService.getUserDetail().getEmail(),
 							customerUserDetailsService.getUserDetail().getRole())
 					+"\"}", HttpStatus.OK);
+				} else {
+					return new ResponseEntity<String>("{\"message\":\""+ "Wait for admin approval." + "\"}",HttpStatus.BAD_REQUEST);
 				}
-			}else {
-				return new ResponseEntity<String>("{\"message\":\""+ "Wait for admin approval." + "\"}",HttpStatus.BAD_REQUEST);
 			}
 		} catch (Exception e) {
 			log.error("{}", e);
