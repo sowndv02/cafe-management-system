@@ -3,6 +3,7 @@ package com.inn.cafe.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 
 import com.inn.cafe.wrapper.UserWrapper;
@@ -19,4 +20,8 @@ public interface UserService {
 	ResponseEntity<String> checkToken();
 	
 	ResponseEntity<String> changePassword(Map<String, String> requestMap);
+
+	ResponseEntity<String> forgotPassword(Map<String, String> requestMap);
+	
+	
 }
