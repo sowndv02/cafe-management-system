@@ -3,7 +3,19 @@
 <h1 align="center">Hi 👋, I'm Sown</h1>
 <h3 align="center">A passionate BackEnd developer from VietNam</h3>
 
-- 🌱 I’m currently learning **Spring boot Restful API, Spring Jpa/Hibernate, MySql, JWT**
+- 🌱 I’m currently learning: **Spring boot Restful API, Spring Jpa/Hibernate, MySql, JWT**
+
+- Features:
+1. Logịn, Logout(Using JWT)
+2. Register (Have send Email)
+3. ForgotPassword (Have send Email)
+4. Manage Categories
+5. Manage Products
+6. Manage Orders
+7. Manage Bills
+8. Manage Users
+9. Generate Bill (PDF)
+10. View Bill Details
 
 - 👨‍💻 All of my projects are available at [https://github.com/sowndv02](https://github.com/sowndv02)
 
