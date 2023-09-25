@@ -57,7 +57,7 @@ export class ManageUserComponent implements OnInit {
       this.ngxService.stop();
       this.responseMessage = response?.message;
       this.snackbarService.openSnackBar(this.responseMessage,"success");
-    },(error:any){
+    },(error:any)=>{
       this.ngxService.stop();
       console.log(error);
       if(error.error?.message){

@@ -11,20 +11,20 @@ export class CategoryService {
   constructor(private httpClient:HttpClient) { }
 
   add(data:any){
-    return this.httpClient.post(`${this.uri}/category/add`,data,{
+    return this.httpClient.post(this.uri + "/category/add",data,{
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     });
   }
 
 
   update(data:any){
-    return this.httpClient.post(`${this.uri}/category/update`,data,{
+    return this.httpClient.post(this.uri + "/category/update",data,{
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     });
   }
 
   getCategories(){
-    return this.httpClient.get(`${this.uri}/category/get`);
+    return this.httpClient.get(this.uri +"/category/get");
   }
 
   getFilteredCategories(){

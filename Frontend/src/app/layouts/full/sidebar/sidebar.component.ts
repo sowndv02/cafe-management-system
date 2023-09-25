@@ -18,7 +18,7 @@ export class AppSidebarComponent implements OnDestroy {
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    public menuitems: MenuItems
+    public menuItems: MenuItems
   ) {
     this.tokenPayload = jwtDecode(this.token);
     this.userRole = this.tokenPayload?.role;
